@@ -1,27 +1,46 @@
 # HopeStarter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.7.
+This is a minimalistic Angular starter with all you should need to create an easy to read and scale state of the art Angular application.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+To run `ng-cli` commands open another terminal and leave this one open since it's running the dev server.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Generating components / UI elements
 
-## Build
+```
+ng generate module [path-from-/app]/component-name
+ng generate component [path-from-/app]/component-name
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Why module first ?
+This way your component has a module file where you can import anything in an Angular way.
 
-## Running unit tests
+## Generating routes / new pages
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+[TODO]
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Generating new stores
 
-## Further help
+[TODO]
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Building
+
+Tools for making sure the build is as small as possible and our pages as fast as possible to compile are built in to Angular CLI, all that is needed is to  make use of them.
+
+The command to achieve the smallest possible and fastest to render build is:  
+
+```bash
+ng build --aot --env=prod --prod
+``` 
+
+- `--prod` minify hash, and gzip.
+- `--env=prod` use your prod environment constants file.
+- `--aot` compile angular templates via [AOT](https://angular.io/docs/ts/latest/cookbook/aot-compiler.html)
+
+And to analyze our build files we can use the flag:
+- `--stats-json` generate stats.json that can then be visualized in [webpack visualizer](https://chrisbateman.github.io/webpack-visualizer/)
