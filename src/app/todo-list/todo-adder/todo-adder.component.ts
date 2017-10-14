@@ -1,4 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Rx';
+
+import * as TodoListActions from '../../../state/todo-list/todo-list.actions';
+import { State } from '../../../state/todo-list/todo-list.state';
 
 @Component({
   selector: 'app-todo-adder',
@@ -9,16 +14,16 @@ export class TodoAdderComponent implements OnInit {
 
   newTask: String = '';
 
-  @Output() addTask = new EventEmitter();
-
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
   ngOnInit() {
   }
 
-  addTask_(){
-    this.addTask.emit(this.newTask);
-    this.newTask = '';
+  addTask(name: string) {
+    this.store.dispatch({
+      type: TodoListActions.ADD_TODO,
+      payload: { name }
+    });
   }
 
 }

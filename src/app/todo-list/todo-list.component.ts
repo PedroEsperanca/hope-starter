@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Rx';
+
+import { State } from '../../state/todo-list/todo-list.state';
 
 @Component({
   selector: 'app-todo-list',
@@ -7,24 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoListComponent implements OnInit {
 
-  newTask: String = '';
+  list$: Observable<State>;
 
-  list: Array<any> = [
-    { name: 'clean room', done: false },
-    { name: 'make pancakes', done: false },
-    { name: 'spend 3 hours on reddit', done: true }
-  ];
-
-  constructor() { }
+  // [HACK] <any> should be <State>
+  // Due to recent ngrx changes it
+  constructor(private store: Store<any>) {
+    this.list$ = store.select('todoListStore');
+  }
 
   ngOnInit() {
   }
-
-  addTask(newTask) {
-    this.list.push({
-      name: newTask,
-      done: false
-    });
-  }
-
 }
