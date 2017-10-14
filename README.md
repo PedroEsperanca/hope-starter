@@ -10,10 +10,16 @@ To run `ng-cli` commands open another terminal and leave this one open since it'
 
 ## Generating components / UI elements
 
+- bootstrap
 ```
 ng generate module [path-from-/app]/component-name
 ng generate component [path-from-/app]/component-name
 ```
+
+- export in module
+
+- inject in parent
+
 
 Why module first ?
 This way your component has a module file where you can import anything in an Angular way.
@@ -21,6 +27,10 @@ This way your component has a module file where you can import anything in an An
 ## Generating routes / new pages
 
 [TODO]
+
+- routes file
+
+- reference in parent
 
 
 ## Generating new stores
