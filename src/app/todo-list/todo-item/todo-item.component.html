@@ -1,2 +1,2 @@
-<input type="checkbox" [(ngModel)]="task.done"/>
+<input type="checkbox" [ngModel]="task.done" (click)="toggleTodo(task.name)"/>
 {{task.name}}

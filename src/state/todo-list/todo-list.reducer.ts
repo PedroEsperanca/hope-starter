@@ -18,9 +18,14 @@ export default function todoListReducer(state = intitialState, action: Action): 
         }
 
         case TodoListActions.TOGGLE_TODO: {
-            const newstate = Object.assign({}, state);
-            const index = newstate.todos.findIndex(todo => todo.name === action.payload.name);
-            newstate.todos[index].done = !newstate.todos[index].done;
+            // [ HACK ] replace with more effective tecnique
+            const newstate = JSON.parse(JSON.stringify(state));
+            newstate.todos = newstate.todos.map( todo => {
+              if (todo.name === action.payload.name) {
+                todo.done = !todo.done;
+              }
+              return todo;
+            });
             return newstate;
         }
 

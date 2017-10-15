@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
 
 import * as TodoListActions from '../../../state/todo-list/todo-list.actions';
-import { State } from '../../../state/todo-list/todo-list.state';
 
 @Component({
   selector: 'app-todo-adder',
