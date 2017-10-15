@@ -1,4 +1,3 @@
-// ./effects/auth.ts
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
@@ -14,7 +13,7 @@ import * as TodoListActions from './todo-list.actions';
 export type Action = TodoListActions.All;
 
 @Injectable()
-export default class TodoListEffects {
+export class TodoListEffects {
 
   constructor(
     private http: HttpClient,
