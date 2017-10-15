@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { routing, appRoutingProviders } from './app.routes';
 import { HomeModule } from './home/home.module';
+import { SharedModule } from './shared/shared.module';
 
 import todoListReducer from './../state/todo-list/todo-list.reducer';
 import { TodoListEffects } from './../state/todo-list/todo-list.effects';
@@ -21,14 +22,17 @@ import { TodoListEffects } from './../state/todo-list/todo-list.effects';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+
     routing,
     HomeModule,
+    SharedModule,
+
     StoreModule.forRoot({
       todoListStore: todoListReducer
     }),
     EffectsModule.forRoot([TodoListEffects]),
     StoreDevtoolsModule.instrument(),
-    HttpClientModule,
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

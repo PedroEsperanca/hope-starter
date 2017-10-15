@@ -4,33 +4,112 @@ This is a minimalistic Angular starter with all you should need to create an eas
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```
+npm start
+```
 
-To run `ng-cli` commands open another terminal and leave this one open since it's running the dev server.
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+To run `ng` commands open another terminal and leave this one open since it's running the dev server.
 
 ## Generating components / UI elements
 
-- bootstrap
+- Bootstrap
 ```
-ng generate module [path-from-/app]/component-name
-ng generate component [path-from-/app]/component-name
+ng g module [path-from-/app]/component-name
+ng g component [path-from-/app]/component-name
 ```
 
-- export in module
+- Export in module
 
-- inject in parent
+  In `[path-from-/app]/component-name.module.ts`
+
+  Add:
+
+  ```ts
+  @NgModule({
+    (...)
+    exports: [ComponentName] //<-- add this
+  })
+  ```
+
+- Inject in the parent
+
+  In the `.module.ts` file of the direct parent add:
+
+  ```ts
+  import { ComponentNameModule } from './component-name/component-name.module'; //<-- add this (1/2)
+
+  @NgModule({
+    imports: [
+      (...)
+      ComponentNameModule //<-- add this (2/2)
+    ]
+  })
+  ```
 
 
-Why module first ?
-This way your component has a module file where you can import anything in an Angular way.
+  #### Why encapsulate every component in a module  ?
+  This way your component has a module file where you can import anything in an Angular way.
+
+## Shared folder / modules
+
+If you want to re-use a component create it at the level where the top-most module that will import it resides, in a `/shared` folder.
+
+Take a look at `app/shared` for reference
 
 ## Generating routes / new pages
 
 [TODO]
 
-- routes file
+- Create a **component / UI element* as explained above, at the level at wich you want your new route
 
-- reference in parent
+  example component levels -> routes:
+
+    - `/app/about` -> `/about`
+    - `/app/about/about-detail` -> `/about/about-detail`
+
+- **routes file**
+
+    - create `component-name.routes.ts`:
+
+      ```ts
+        import { ModuleWithProviders } from '@angular/core';
+        import { Routes, RouterModule } from '@angular/router';
+
+        import { ComponentNameComponent } from './component-name.component';
+
+        const routes: Routes = [
+          { path: '', component: ComponentNameComponent }
+        ];
+
+        export const routing: ModuleWithProviders = RouterModule.forChild(routes);
+      ```
+
+    - import it in the `component-name.module.ts`
+
+      ```ts
+      import { routing } from './component-name.routes'; //<-- add this (1/2)
+
+      @NgModule({
+        imports: [
+          (...)
+
+          routing, //<-- add this (2/2)
+          (...)
+        ]
+      })
+
+      ```
+
+- reference in parent **routes file**
+
+  ```ts
+  const routes: Routes = [
+    (...)
+    { path: 'component-name', loadChildren: './component-name/component-name.module#ComponentNameModule' }, //<-- add this
+  ];
+  ```
 
 
 ## Generating new stores
@@ -40,17 +119,6 @@ This way your component has a module file where you can import anything in an An
 
 ## Building
 
-Tools for making sure the build is as small as possible and our pages as fast as possible to compile are built in to Angular CLI, all that is needed is to  make use of them.
-
-The command to achieve the smallest possible and fastest to render build is:  
-
 ```bash
-ng build --aot --env=prod --prod
+npm build
 ``` 
-
-- `--prod` minify hash, and gzip.
-- `--env=prod` use your prod environment constants file.
-- `--aot` compile angular templates via [AOT](https://angular.io/docs/ts/latest/cookbook/aot-compiler.html)
-
-And to analyze our build files we can use the flag:
-- `--stats-json` generate stats.json that can then be visualized in [webpack visualizer](https://chrisbateman.github.io/webpack-visualizer/)

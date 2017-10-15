@@ -7,6 +7,7 @@ import { routing } from './todo-list.routes';
 
 import { TodoItemModule } from './todo-item/todo-item.module';
 import { TodoAdderModule } from './todo-adder/todo-adder.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { TodoAdderModule } from './todo-adder/todo-adder.module';
     FormsModule,
     routing,
 
+    SharedModule,
     TodoItemModule,
     TodoAdderModule
   ],
