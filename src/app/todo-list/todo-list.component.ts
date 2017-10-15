@@ -13,7 +13,7 @@ export class TodoListComponent implements OnInit {
 
   list$: Observable<State>;
 
-  // [HACK] <any> should be <State>
+  // [ HACK ] <any> should be <State>
   // Due to recent ngrx changes it
   constructor(private store: Store<any>) {
     this.list$ = store.select('todoListStore');

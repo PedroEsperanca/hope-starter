@@ -60,8 +60,6 @@ Take a look at `app/shared` for reference
 
 ## Generating routes / new pages
 
-[TODO]
-
 - Create a **component / UI element* as explained above, at the level at wich you want your new route
 
   example component levels -> routes:
@@ -121,4 +119,22 @@ Take a look at `app/shared` for reference
 
 ```bash
 npm build
+``` 
+
+
+----
+
+## Handling *bad* code
+
+It's normal to be pressured with deadlines and to have to leave a feature working but in a way we are not satisfied with yet as developers, in this case it's better to identify these situations than to just remember about them latter or to be found by someone else.
+
+So in these case we leave a comment in the code above the *bad code* marked as `[ HACK ]`.
+
+Like so:
+```ts
+  // [ HACK ] <any> should be <State>
+  // Due to recent ngrx changes it
+  constructor(private store: Store<any>) {
+    this.list$ = store.select('todoListStore');
+  }
 ``` 

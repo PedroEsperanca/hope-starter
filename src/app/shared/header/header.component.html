@@ -1,4 +1,11 @@
 <nav class="navbar">
+  <button
+    *ngIf="showSidepanelButton"
+    (click)="toggleSidePanel()"
+    class="toggle-sidepanel-button"
+  >
+    <i class="fa fa-bars"></i>
+  </button>
   <a class="navbar-brand" href="#">Navbar</a>
   <ul class="nav nav-pills">
     <li class="nav-item">

@@ -15,6 +15,7 @@ import { SharedModule } from './shared/shared.module';
 
 import todoListReducer from './../state/todo-list/todo-list.reducer';
 import { TodoListEffects } from './../state/todo-list/todo-list.effects';
+import UIReducer from './../state/UI/UI.reducer';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TodoListEffects } from './../state/todo-list/todo-list.effects';
     SharedModule,
 
     StoreModule.forRoot({
-      todoListStore: todoListReducer
+      todoListStore: todoListReducer,
+      UIStore: UIReducer
     }),
     EffectsModule.forRoot([TodoListEffects]),
     StoreDevtoolsModule.instrument(),

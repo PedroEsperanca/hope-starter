@@ -1,0 +1,5 @@
+<aside [ngClass]="'is-open-'+(UI$ | async).sidePanel.isOpen">
+    <pre
+      style="overflow: hidden"
+    >{{(UI$ | async) | json}}</pre>
+</aside>
