@@ -112,7 +112,165 @@ Take a look at `app/shared` for reference
 
 ## Generating new stores
 
-[TODO]
+- create a new folder in state with the files:
+
+  - `store-name.actions.ts`
+
+    ```ts
+    import { Action } from '@ngrx/store';
+
+    export const ACTION_NAME          = '[STORE-NAME] ACTION_NAME';
+    export const ACTION_NAME_SUCCESS  = '[STORE-NAME] ACTION_NAME_SUCCESS';
+    export const ACTION_NAME_FAIL     = '[STORE-NAME] ACTION_NAME_FAIL';
+
+
+    export class ActionName implements Action {
+      readonly type = ACTION_NAME;
+      constructor(public payload: {name?: string}) { }
+    }
+
+    export type All
+      = ActionName
+
+    ```
+
+  - `store-name.reducer.ts`
+
+    ```ts
+    import { State, intitialState } from './store-name.state';
+    import * as StoreNameActions from './store-name.actions';
+
+    export type Action = StoreNameActions.All;
+
+    export default function storeNameReducer(state = intitialState, action: Action): State {
+        switch (action.type) {
+            case StoreNameActions.ACTION_NAME: {
+                const newstate = Object.assign({}, state);
+                // change state here
+                // be sure to enforce immutability in deep objects
+                return newstate;
+            }
+
+            default: {
+                return state;
+            }
+        }
+    }
+
+    ```
+
+  - `store-name.state.ts`
+
+    ```ts
+    export interface State {
+      someParameter: string
+    }
+
+    export const intitialState: State = {
+      someParameter: 'whatever'
+    };
+    ```
+
+  - `store-name.effects.ts` (optional)
+
+    ```ts
+    import 'rxjs/add/operator/map';
+    import 'rxjs/add/operator/mergeMap';
+    import 'rxjs/add/operator/catch';
+    import { Injectable } from '@angular/core';
+    import { HttpClient } from '@angular/common/http';
+    import { Observable } from 'rxjs/Observable';
+    import { Action } from '@ngrx/store';
+    import { Actions, Effect } from '@ngrx/effects';
+    import { of } from 'rxjs/observable/of';
+
+    import * as StoreNameActions from './store-name.actions';
+
+    export type Action = StoreNameActions.All;
+
+    @Injectable()
+    export class StoreNameEffects {
+
+      constructor(
+        private http: HttpClient,
+        private actions$: Actions
+      ) {}
+
+      @Effect() login$: Observable<Action> = this.actions$.ofType(StoreNameActions.ADD_TODO)
+        .mergeMap(action =>
+          // [ Hack ] should typeckeck `payload`
+          this.http.post('/some-url', action['payload'])
+
+            .map(data => ({ type: StoreNameActions.ACTION_NAME_SUCCESS, payload: data }))
+
+            .catch(() => of({ type: StoreNameActions.ACTION_NAME_FAIL }))
+        );
+    }
+
+    ```
+
+
+- inject in `app.module.ts`
+
+  ```ts
+  (...)
+  import storeNameReducer from './../state/store-name/store-name.reducer'; //<-- add this (1/2)
+  import { StoreNametEffects } from './../state/store-name/store-name.effects'; //<-- add this (optional 1/2)
+  (...)
+  @NgModule({
+    (...)
+    imports: [
+      (...)
+      StoreModule.forRoot({
+        (...)
+        storeName: storeNameReducer //<-- add this (2/2)
+      }),
+      EffectsModule.forRoot([
+        (...)
+        StoreNametEffects //<-- add this (optional 2/2)
+      ])
+  ```
+
+- inject in a component for updating the UI
+
+  ```ts
+
+  import { Store } from '@ngrx/store';
+  import { Observable } from 'rxjs/Rx';
+
+  import { State } from '../../state/store-name/store-name.state';
+
+  (...)
+  export class SomeComponent implements OnInit {
+
+    storeName$: Observable<State>;
+
+    // [ HACK ] <any> should be <State>
+    // Due to recent ngrx changes it
+    constructor(private store: Store<any>) {
+      this.storeName$ = store.select('storeNameStore');
+    }
+  ```
+
+- inject in a component for dispatching action
+
+  ```ts
+  import { Store } from '@ngrx/store';
+
+  import * as StoreNameActions from '../../../state/store-name/store-name.actions';
+
+  (...)
+
+  ngOnInit() {
+  }
+
+  buttonClick(name: String) {
+    this.store.dispatch({
+      type: StoreNAmeActions.ACTION_NAME,
+      payload: { name }
+    });
+  }
+  ```
 
 
 ## Building
