@@ -13,7 +13,7 @@ import { routing, appRoutingProviders } from './app.routes';
 import { HomeModule } from './home/home.module';
 
 import todoListReducer from './../state/todo-list/todo-list.reducer';
-import TodoListEffects from './../state/todo-list/todo-list.effects';
+import { TodoListEffects } from './../state/todo-list/todo-list.effects';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import TodoListEffects from './../state/todo-list/todo-list.effects';
       todoListStore: todoListReducer
     }),
     EffectsModule.forRoot([TodoListEffects]),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreDevtoolsModule.instrument(),
     HttpClientModule,
   ],
   providers: [appRoutingProviders],

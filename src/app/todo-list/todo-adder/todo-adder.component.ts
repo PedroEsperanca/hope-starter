@@ -19,7 +19,7 @@ export class TodoAdderComponent implements OnInit {
   ngOnInit() {
   }
 
-  addTask(name: string) {
+  addTask(name: String) {
     this.store.dispatch({
       type: TodoListActions.ADD_TODO,
       payload: { name }
