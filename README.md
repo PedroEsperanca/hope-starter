@@ -276,7 +276,7 @@ Take a look at `app/shared` for reference
 ## Building
 
 ```bash
-npm build
+npm run build
 ``` 
 
 
