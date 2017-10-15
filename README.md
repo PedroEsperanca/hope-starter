@@ -2,6 +2,19 @@
 
 This is a minimalistic Angular starter with all you should need to create an easy to read and scale state of the art Angular application.
 
+Table of contents
+=================
+
+  * [Development server](#development-server)
+  * [Generating components / UI elements](#generating-components-ui-elements)
+  * [Shared folder / modules](#shared-folder-modules)
+  * [Generating routes / new pages](#generating-routes-new-pages)
+  * [Generating new stores](#generating-new-stores)
+  * [Building](#building)
+  * [Handling *bad* code](#handling-bad-code)
+
+---
+
 ## Development server
 
 ```
@@ -11,6 +24,8 @@ npm start
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 To run `ng` commands open another terminal and leave this one open since it's running the dev server.
+
+---
 
 ## Generating components / UI elements
 
@@ -52,11 +67,15 @@ ng g component [path-from-/app]/component-name
   #### Why encapsulate every component in a module  ?
   This way your component has a module file where you can import anything in an Angular way.
 
+---
+
 ## Shared folder / modules
 
 If you want to re-use a component create it at the level where the top-most module that will import it resides, in a `/shared` folder.
 
 Take a look at `app/shared` for reference
+
+---
 
 ## Generating routes / new pages
 
@@ -109,7 +128,7 @@ Take a look at `app/shared` for reference
   ];
   ```
 
-
+---
 ## Generating new stores
 
 - create a new folder in `/state` with the files:
@@ -272,6 +291,7 @@ Take a look at `app/shared` for reference
     }                                       //
   ```
 
+---
 
 ## Building
 
@@ -280,7 +300,7 @@ npm run build
 ``` 
 
 
-----
+---
 
 ## Handling *bad* code
 
