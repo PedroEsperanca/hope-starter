@@ -112,7 +112,7 @@ Take a look at `app/shared` for reference
 
 ## Generating new stores
 
-- create a new folder in state with the files:
+- create a new folder in `/state` with the files:
 
   - `store-name.actions.ts`
 
@@ -235,41 +235,41 @@ Take a look at `app/shared` for reference
 
   ```ts
 
-  import { Store } from '@ngrx/store';
-  import { Observable } from 'rxjs/Rx';
+  import { Store } from '@ngrx/store'; //<-- add this (1/6)
+  import { Observable } from 'rxjs/Rx'; //<-- add this (2/6)
 
-  import { State } from '../../state/store-name/store-name.state';
+  import { State } from '../../state/store-name/store-name.state'; //<-- add this (3/6)
 
   (...)
   export class SomeComponent implements OnInit {
 
-    storeName$: Observable<State>;
+    storeName$: Observable<State>; //<-- add this (4/6)
 
     // [ HACK ] <any> should be <State>
     // Due to recent ngrx changes it
-    constructor(private store: Store<any>) {
-      this.storeName$ = store.select('storeNameStore');
+    constructor(private store: Store<any>) { //<-- edit this (5/6)
+      this.storeName$ = store.select('storeNameStore'); //<-- add this (6/6)
     }
   ```
 
 - inject in a component for dispatching action
 
   ```ts
-  import { Store } from '@ngrx/store';
+  import { Store } from '@ngrx/store'; //<-- add this (1/3)
 
-  import * as StoreNameActions from '../../../state/store-name/store-name.actions';
+  import * as StoreNameActions from '../../../state/store-name/store-name.actions'; //<-- add this (2/3)
 
   (...)
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  buttonClick(name: String) {
-    this.store.dispatch({
-      type: StoreNAmeActions.ACTION_NAME,
-      payload: { name }
-    });
-  }
+    buttonClick(name: String) {             //<-- add this (3/3)
+      this.store.dispatch({                 //
+        type: StoreNAmeActions.ACTION_NAME, //
+        payload: { name }                   //
+      });                                   //
+    }                                       //
   ```
 
 
